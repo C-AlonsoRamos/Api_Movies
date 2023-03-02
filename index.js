@@ -15,6 +15,9 @@ connect();
 const moviesRoutes = require("./src/routes/movies.routes");
 server.use("/api/movies", moviesRoutes);
 
+const cinemaRoutes = require("./src/routes/cinemas.routes");
+server.use("/api/cinema", cinemaRoutes);
+
 server.use("*", (req, res, next) => {
   const error = new Error("Route not found");
   error.status = 404;
