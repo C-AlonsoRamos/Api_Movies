@@ -53,11 +53,13 @@ router.delete("/delete-cinema/:id", async (req, res, next) => {
 
 // Editar cines:
 
-router.patch("/updated-cinema/:id", async (req, res, next) => {
+router.put("/updated-cinema/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
     const cinemaModified = new Cinema(req.body);
     cinemaModified._id = id;
+    const foundCinema = await Cinema.findById(id);
+    cinemaModified.movies = [...cinemaModified.movies, ...foundCinema.movies];
     const cinemaUpdated = await Cinema.findByIdAndUpdate(id, cinemaModified);
     return res.status(200).json(cinemaUpdated);
   } catch (error) {
